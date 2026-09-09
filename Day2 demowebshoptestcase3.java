@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
@@ -15,79 +14,119 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.io.FileHandler;
 
-import com.google.common.io.Files;
-
 public class day2demowebshoptescase3 {
 
-	public static void main(String[] args) throws IOException, InterruptedException {
-		// TODO Auto-generated method stub
-		
-		        WebDriver driver = new ChromeDriver();
-		        driver.manage().window().maximize();
-		        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    public static void main(String[] args) throws IOException, InterruptedException {
 
-		        // Navigate to Demo Web Shop
-		        driver.get("https://demowebshop.tricentis.com/");
-		        Thread.sleep(2000);
+        WebDriver driver = new ChromeDriver();
 
-		        // 2. Identify 14.1-inch Laptop
-		        WebElement laptop = driver.findElement(By.xpath("//a[text()='14.1-inch Laptop']"));
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-		        // Identify Add to Cart button for the laptop
-		        WebElement addToCartButton = laptop.findElement(By.xpath("./ancestor::div[contains(@class,'product-item')]//input[@value='Add to cart']"));
+        driver.get("https://demowebshop.tricentis.com/");
+        Thread.sleep(2000);
 
-		        // Capture size of Add to Cart button
-		        Dimension size = addToCartButton.getSize();
+        // 1. Identify 14.1-inch Laptop
+        WebElement laptop = driver.findElement(
+                By.xpath("//a[text()='14.1-inch Laptop']")
+        );
 
-		        System.out.println("Add to Cart Button Size:");
-		        System.out.println("Width  : " + size.getWidth());
-		        System.out.println("Height : " + size.getHeight());
+        // 2. Identify Add to Cart button
+        WebElement addToCartButton = laptop.findElement(
+                By.xpath("./ancestor::div[contains(@class,'product-item')]//input[@value='Add to cart']")
+        );
 
-		        // Click Add to Cart
-		        addToCartButton.click();
+        // Capture button size
+        Dimension size = addToCartButton.getSize();
 
-		        // 3. Click Shopping Cart
-		        WebElement shoppingCart = driver.findElement(By.className("cart-label"));
+        System.out.println("Add to Cart Button Size:");
+        System.out.println("Width  : " + size.getWidth());
+        System.out.println("Height : " + size.getHeight());
 
-		        shoppingCart.click();
+        // Click Add to Cart
+        addToCartButton.click();
 
-		        // 4. Verify Remove checkbox and capture complete information using getRect()
-		        WebElement removeCheckbox = driver.findElement(By.xpath("//input[@name='removefromcart']"));
+        // 3. Click Shopping Cart
+        WebElement shoppingCart = driver.findElement(By.className("cart-label"));
+        shoppingCart.click();
 
-		        
-		        if (removeCheckbox.isSelected()) {
-		            System.out.println("Remove checkbox is selected.");
-		        } else {
-		            System.out.println("Remove checkbox is NOT selected.");
-		        }
+        // 4. Verify Remove checkbox
+        WebElement removeCheckbox = driver.findElement(
+                By.xpath("//input[@name='removefromcart']")
+        );
 
-		        // Capture complete information using getRect()
-		        Rectangle rect = removeCheckbox.getRect();
+        if (removeCheckbox.isSelected()) {
+            System.out.println("Remove checkbox is selected.");
+        } else {
+            System.out.println("Remove checkbox is NOT selected.");
+        }
 
-		        System.out.println("\nCheckbox Complete Information using getRect():");
-		        System.out.println("X      : " + rect.getX());
-		        System.out.println("Y      : " + rect.getY());
-		        System.out.println("Width  : " + rect.getWidth());
-		        System.out.println("Height : " + rect.getHeight());
+        // Capture complete information using getRect()
+        Rectangle rect = removeCheckbox.getRect();
 
-		        // 5. Verify alert before clicking Apply Coupon
-		        WebElement applyCoupon = driver.findElement(By.xpath("//input[@value='Apply coupon']"));
-				applyCoupon.click();
-				 WebElement message = driver.findElement(By.className("message"));
-				 if(message.isDisplayed()) {
-					 System.out.println("Message displayed  Apply Coupon");
-				 }else {
-					 System.out.println("Message not displayed  Apply Coupon");
-				 }
-				 
+        System.out.println("\nCheckbox Complete Information using getRect():");
+        System.out.println("X      : " + rect.getX());
+        System.out.println("Y      : " + rect.getY());
+        System.out.println("Width  : " + rect.getWidth());
+        System.out.println("Height : " + rect.getHeight());
 
-		        // 6. Take screenshot of Laptop image
-				 Thread.sleep(2000);
-					TakesScreenshot tks=(TakesScreenshot) driver;
-					File src=tks.getScreenshotAs(OutputType.FILE);
-					File dest=new File("./LAs/Loptop.png");
-					FileHandler.copy(src, dest);
-	}
-	}
+        // 5. Identify Apply Coupon button
+        WebElement applyCoupon = driver.findElement(
+                By.xpath("//input[@value='Apply coupon']")
+        );
+        applyCoupon.click();
+        
 
+        // BEFORE clicking Apply Coupon
+        System.out.println("\nBefore clicking Apply Coupon:");
 
+        WebElement messageBefore = driver.findElement(
+                By.className("message")
+        );
+      
+
+        if (messageBefore.isDisplayed()) {
+            System.out.println("Message/Alert is displayed BEFORE clicking Apply Coupon.");
+            System.out.println("Message: " + messageBefore.getText());
+        } else {
+            System.out.println("Message/Alert is NOT displayed BEFORE clicking Apply Coupon.");
+        }
+
+        Thread.sleep(1000);
+
+        // AFTER clicking Apply Coupon
+        WebElement applyCoupon1 = driver.findElement(
+                By.xpath("//input[@value='Apply coupon']")
+        );
+        applyCoupon1.click();
+        System.out.println("\nAfter clicking Apply Coupon:");
+
+        WebElement messageAfter = driver.findElement(
+                By.className("message")
+        );
+      
+
+        if (messageAfter.isDisplayed()) {
+            System.out.println("Message/Alert is displayed AFTER clicking Apply Coupon.");
+            System.out.println("Message: " + messageAfter.getText());
+        } else {
+            System.out.println("Message/Alert is NOT displayed AFTER clicking Apply Coupon.");
+        }
+        
+
+        // 6. Take screenshot
+        Thread.sleep(2000);
+
+        TakesScreenshot tks = (TakesScreenshot) driver;
+
+        File src = tks.getScreenshotAs(OutputType.FILE);
+
+        File dest = new File("./LAs/Loptop.png");
+
+        FileHandler.copy(src, dest);
+
+        System.out.println("\nScreenshot captured successfully.");
+
+        driver.quit();
+    }
+}
