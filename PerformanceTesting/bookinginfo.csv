@@ -1,0 +1,6 @@
+﻿Flight,Price,Airline,InputName,Address,City,State,Zipcode,CardType,CreditCardNumber,CreditCardMonth,CreditCardYear,NameOnCard
+101,"25,000",Dubai,Smith,tnagar,Toranagl,Karnataka,583123,Visa,35462,8,31,Smith
+102,"45,789",Paris,Joe,vnagar,Ballari,Karnataka,583123,Visa,98874,4,24,Joe
+103,"67,000",Rome,John,Srnagar,Telanga,Delhi,583104,Visa,63543,3,29,John
+104,35765,Boston,Alice,rrnagar,hyd,Telangana,583102,Visa,53423,6,26,Alice
+105,"24,765",America,Job,jpnagar,guntur,Andhra,583101,Visa,63854,5,20,Job
